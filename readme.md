@@ -1,0 +1,50 @@
+# Overview
+
+This implements bitwise operation for enums (scoped and unscoped).  
+For any enum, like
+
+```cpp
+enum class EButtons
+{
+	Left = 1,
+	Right = 2,
+	Middle = 4,
+};
+```
+
+you can enable bitwise operations by declaring 
+
+```cpp
+enable_bitset_enum(EButtons);
+```
+
+A  definition is not required: the function is never called, the declaration
+acs as a tag that enables bitwise operations.
+
+# Operations
+
+The operations defined are `|  |=  &  &= ^  ^=  -  -=`
+
+`a-b` and `a-=b` take the place of `a &~ b` and `a &= ~b`, respectively, i.e.,
+clearing the bits set in `b`. Negation is not implemented, because that would 
+set bits that are not defined in the enum. 
+
+# Type Safety
+
+It's recommended to use scoped enums.
+
+Note that these operations are defined for an unscoped enum, but they yield the
+underlying type (usually `int`) instead of the enum. Unscoped enums don't
+provide diagnostics when you mix values of different enums:
+
+```cpp
+enum EFoo { a = 1, b = 2, c = 4 };
+enum EBar { d = 1, e = 2, f = 4 };
+
+// ....
+
+void Test()
+{
+    auto mix = a | d;       // allowed, no diagnostic
+}
+```
