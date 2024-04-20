@@ -21,6 +21,10 @@ enable_bitset_enum(EButtons);
 A  definition is not required: the function is never called, the declaration
 acs as a tag that enables bitwise operations.
 
+# Acknowledgement
+
+I found the idea ... elsewhere. It wasn't the full set of operations,  just a demonstration of the general concept.
+
 # Operations
 
 The operations defined are `|  |=  &  &= ^  ^=  -  -=`
@@ -48,3 +52,10 @@ void Test()
     auto mix = a | d;       // allowed, no diagnostic
 }
 ```
+
+# c++ 17 vs. c++ 20
+
+There are two implementations: one for C++ 20 using concepts to detect the  "tag" function declaration, the other using `std::enable_if`, compatible wiht C++17.
+Except for the tag function detection, they are only marginally different.
+
+
